@@ -1,0 +1,18 @@
+
+
+.search{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: fit-content;
+    input{
+        font-family: var(--font-family);
+        font-weight: 300;
+        font-size: 24px;
+        color: var(--pure-white);
+        opacity: 0.5;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+}

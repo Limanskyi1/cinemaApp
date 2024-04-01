@@ -1,0 +1,30 @@
+.sidebar {
+  padding: 32px 28px;
+  background: var(--semi-dark-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  height: 90vh;
+  border-radius: 20px;
+  .sidebar__logo {
+    margin-bottom: 75px;
+  }
+  .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .sidebar__img {
+    margin-top: auto;
+  }
+  a {
+    svg {
+      fill: #5a698f;
+      path {
+        fill: #5a698f;
+      }
+    }
+  }
+}
