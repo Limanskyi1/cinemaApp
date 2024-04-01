@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updatePinned } from "../../utils/updatePinnMovie";
 
 export const Movie = (props) => {
+  const rating = props.ratingImdb || props.ratingKinopoisk;
   const navigate = useNavigate();
   const [isPinned, setIsPinned] = React.useState(false);
   const pinnedItems = JSON.parse(localStorage.getItem("pinned"));
@@ -22,6 +23,17 @@ export const Movie = (props) => {
     const bollean = updatePinned(id, props);
     bollean ? setIsPinned(true) : setIsPinned(false); 
   };
+
+  const createRateClass = (rating) => {
+    if(rating > 9){
+      return "green"
+    }
+    if(rating > 8){
+      return "orange"
+    } else {
+      return "red"
+    }
+  }
 
   return (
     <div className={`movie ${isPinned ? 'pinned' : ''}`}>
@@ -57,6 +69,9 @@ export const Movie = (props) => {
             strokeWidth="1.5"
           />
         </svg>
+      </div>
+      <div className={`movie__rating ${createRateClass(rating)}`}>
+        {rating}
       </div>
     </div>
   );

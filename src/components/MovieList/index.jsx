@@ -3,7 +3,7 @@ import { Movie } from "../Movie";
 import Skeleton from "../Skeleton";
 import { filterItems } from "../../utils/filterByName";
 
-export const MovieList = ({ load ,items , searchValue }) => {
+export const MovieList = ({ load ,items = [] , searchValue }) => {
   
   return (
     <div className="grid-4">
