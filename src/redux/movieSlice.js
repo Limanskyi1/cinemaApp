@@ -1,9 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../axios";
+import queryString from 'query-string';
 
-export const fetchUserById = createAsyncThunk("users/fetchByIdStatus", (page) => {
-  const response = axios.get(`/films?page=${page}`).then(res => res.data).catch(err => console.log(err));
-  return response;
+export const fetchFilms = createAsyncThunk("users/fetchFilms", async (page, thunkAPI) => {
+  try {
+    const queryParams = queryString.stringify({ page });
+    const response = await axios.get(`/films?${queryParams}`);
+
+    const paramsObj = queryString.parse(queryParams);
+    
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", paramsObj.page);
+    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+
+    return { data: response.data, params: queryParams };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
 });
 
 const initialState = {
@@ -21,13 +35,13 @@ export const movieSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserById.fulfilled, (state, action) => {
-        state.data = action.payload;
+      .addCase(fetchFilms.fulfilled, (state, action) => {
+        state.data = action.payload.data;
       })
-      .addCase(fetchUserById.rejected, (state) => {
+      .addCase(fetchFilms.rejected, (state) => {
         state.data = [];
       })
-      .addCase(fetchUserById.pending, (state) => {
+      .addCase(fetchFilms.pending, (state) => {
         state.data = [];
       });
   },

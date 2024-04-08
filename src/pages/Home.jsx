@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { Sidebar } from "../components/SideBar";
 import { Search } from "../components/Search";
 import { Pagination } from "../components/Pagination";
 import { MovieList } from "../components/MovieList";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserById } from "../redux/movieSlice";
+import { fetchFilms } from "../redux/movieSlice";
+import queryString from "query-string";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const [load, setLoad] = useState(true);
-  const [page, setPage] = useState(1);
   const { items } = useSelector((state) => state.movies.data);
   const {searchValue} = useSelector(state => state.search);
 
-  React.useEffect(() => {
+  const params = queryString.parse(window.location.search);
+
+  const [load, setLoad] = useState(true);
+  const [page, setPage] = useState(Number(params.page)|| 1);
+
+  useEffect(() => {
     const fetchData = async () => {
       setLoad(true);
       try {
-        await dispatch(fetchUserById(page));
+        const {payload} = await dispatch(fetchFilms(page));
         setLoad(false);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -1,11 +1,12 @@
 import React from "react";
-import './Search.scss';
+import "./Search.scss";
 import { onChangeValue } from "../../redux/searchSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { resetValue } from "../../redux/searchSlice";
 export const Search = () => {
-  const dispatch = useDispatch()
-  const {searchValue} = useSelector(state => state.search);
+  const dispatch = useDispatch();
+  const { searchValue } = useSelector((state) => state.search);
   return (
     <div className="search">
       <svg
@@ -22,7 +23,24 @@ export const Search = () => {
           fill="white"
         />
       </svg>
-      <input onChange={(e) => dispatch(onChangeValue(e.target.value))} value={searchValue} type="text" placeholder="Search for movies or TV series"/>
+      <input
+        onChange={(e) => dispatch(onChangeValue(e.target.value))}
+        value={searchValue}
+        type="text"
+        placeholder="Search for movies or TV series"
+      />
+      <svg className="search__delete" onClick={() => dispatch(resetValue())}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        stroke="#fff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M6 18L18 6M6 6l12 12"/>
+      </svg>
     </div>
   );
 };
